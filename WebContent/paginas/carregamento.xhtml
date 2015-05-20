@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui"
+	template="/template/geral.xhtml">
+
+	<ui:define name="titulo">Cadastro de carregamento</ui:define>
+	<ui:define name="conteudo">
+		<p:messages id="mensagens" closable="true" />
+
+		<h:form id="form1" rendered="#{carregamentoMb.isListagem()}">
+			<p />
+			<p:commandButton value="Nova" action="#{carregamentoMb.iniciarCriacao}"
+				ajax="false" update="@all" />
+			<p:spacer width="8px" />
+			<p:inputText value="#{carregamentoMb.chavePesquisa}" 
+				title="Pesquisar por código, nome ou localidade"/>
+			<p:commandButton value="Pesquisar"
+				actionListener="#{carregamentoMb.listar}" update="listagem :mensagens" />
+			<p />
+
+			<p:dataTable id="listagem" value="#{carregamentoMb.lista}" var="carregamento"
+				emptyMessage="Nenhum registro encontrado" style="width: 800px">
+				<p:column>
+					<f:facet name="header">Código</f:facet>
+					#{carregamento.id}
+				</p:column>
+				<p:column>
+					<f:facet name="header">Origem</f:facet>
+					#{carregamento.origem}
+				</p:column>
+				<p:column>
+					<f:facet name="header">Destino</f:facet>
+					#{carregamento.destino}
+				</p:column>
+				<p:column style="width: 40px">
+					<h:panelGroup>
+						<p:commandLink title="Editar"
+							action="#{carregamentoMb.iniciarAlteracao(carregamento)}" ajax="false"
+							update="@all">
+							<p:graphicImage value="/resources/icones/edit.gif"/>
+						</p:commandLink>
+						<p:spacer width="5px" />
+						<p:commandLink title="Excluir"
+							action="#{carregamentoMb.iniciarExclusao(carregamento)}" ajax="false"
+							update="@all">
+							<p:graphicImage value="/resources/icones/delete.gif"/>
+						</p:commandLink>
+					</h:panelGroup>
+				</p:column>
+			</p:dataTable>
+			<p />
+			<p:commandButton id="anterior" value="Anterior" title="Página anterior"
+				disabled="#{!carregamentoMb.temPaginaAnterior()}"
+				actionListener="#{carregamentoMb.paginaAnterior}"
+				update="listagem, anterior, proxima" />
+			<p:commandButton id="proxima" value="Próxima" title="Próxima página"
+				disabled="#{!carregamentoMb.temProximaPagina()}"
+				actionListener="#{carregamentoMb.proximaPagina}"
+				update="listagem, anterior, proxima" />
+		</h:form>
+
+		<h:form id="form2"
+			rendered="#{carregamentoMb.isCriacao() || carregamentoMb.isAlteracao() || carregamentoMb.isExclusao()}">
+			<h3>
+				<p:outputLabel value="Criar carregamento"
+					rendered="#{carregamentoMb.isCriacao()}" />
+				<p:outputLabel value="Alterar carregamento"
+					rendered="#{carregamentoMb.isAlteracao()}" />
+				<p:outputLabel value="Confirmar exclusão da carregamento"
+					rendered="#{carregamentoMb.isExclusao()}" />
+			</h3>
+
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Código" />
+				<p:inputText value="#{carregamentoMb.carregamento.id}" />
+				<p:outputLabel value="Origem" />
+				<p:inputText value="#{carregamentoMb.carregamento.origem}" />
+				<p:outputLabel value="Destino" />
+				<p:inputText value="#{carregamentoMb.carregamento.destino}" />
+			</h:panelGrid>
+			<p />
+			<p:commandButton value="Salvar"
+				action="#{carregamentoMb.terminarCriacaoOuAlteracao()}" update="@all"
+				rendered="#{carregamentoMb.isCriacao() || carregamentoMb.isAlteracao()}" />
+			<p:commandButton value="Excluir"
+				action="#{carregamentoMb.terminarExclusao()}" update="@all"
+				rendered="#{carregamentoMb.isExclusao()}" immediate="false" />
+			<p:commandButton value="Cancelar" action="#{carregamentoMb.cancelar()}"
+				update="@all" immediate="false" />
+		</h:form>
+	</ui:define>
+</ui:composition>
