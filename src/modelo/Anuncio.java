@@ -19,7 +19,7 @@ public class Anuncio implements java.io.Serializable{
 	private Integer id;
     @ManyToOne
     @JoinColumn(name = "ID_CARREGAMENTO", referencedColumnName = "ID_CARREGAMENTO")
-    private CarregamentoTeste carregamento;
+    private Carregamento carregamento;
     
     public Anuncio() {
 	}
