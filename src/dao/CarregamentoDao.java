@@ -2,9 +2,9 @@ package dao;
 
 import javax.ejb.Stateless;
 
-import modelo.Carregamento;
+import modelo.CarregamentoTeste;
 
 @Stateless
-public class CarregamentoDao extends GenericDao<Carregamento> {
+public class CarregamentoDao extends GenericDao<CarregamentoTeste> {
 
 }

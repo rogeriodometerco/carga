@@ -14,7 +14,7 @@ import javax.persistence.criteria.Root;
 import util.Paginador;
 
 public abstract class GenericDao<T> {
-	private final static String UNIT_NAME = "itinerarioPU";
+	private final static String UNIT_NAME = "cargaPU";
 
 	@PersistenceContext(unitName = UNIT_NAME)
 	private EntityManager em;
@@ -82,23 +82,17 @@ public abstract class GenericDao<T> {
 		}
 	}
 
-	public List<T> listar(Paginador paginador) throws Exception {
-		try {
-			CriteriaBuilder cb = em.getCriteriaBuilder();
+	public List<T> listar(int firstResult, int maxResults) throws Exception {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
 
-			CriteriaQuery<T> cq = cb.createQuery(classeEntidade);
-			Root<T> root = cq.from(classeEntidade);
-			cq.select(root);
+		CriteriaQuery<T> cq = cb.createQuery(classeEntidade);
+		Root<T> root = cq.from(classeEntidade);
+		cq.select(root);
 
-			TypedQuery<T> q = em.createQuery(cq);
-			q.setFirstResult(paginador.primeiroRegistro());
-			q.setMaxResults(paginador.getTamanhoPagina());
-			return q.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Erro ao listar entidades " 
-					+ classeEntidade.getSimpleName(), e);
-		}
+		TypedQuery<T> q = em.createQuery(cq);
+		q.setFirstResult(firstResult);
+		q.setMaxResults(maxResults);
+		return q.getResultList();
 	}
-
+	
 }

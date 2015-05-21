@@ -8,21 +8,21 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import modelo.Carregamento;
+import modelo.CarregamentoTeste;
 import util.JsfUtil;
 import util.Paginador;
 import facade.CarregamentoFacade;
 
 @ManagedBean
 @ViewScoped
-public class CarregamentoMb implements Serializable {
+public class CarregamentoMb_bkp implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final String LISTAGEM = "listagem";
 	private static final String CRIACAO = "criacao";
 	private static final String ALTERACAO = "alteracao";
 	private static final String EXCLUSAO = "exclusao";
-	private Carregamento carregamento;
-	private List<Carregamento> lista;
+	private CarregamentoTeste carregamento;
+	private List<CarregamentoTeste> lista;
 	private String estadoView;
 	private String chavePesquisa;
 	@EJB
@@ -35,20 +35,20 @@ public class CarregamentoMb implements Serializable {
 		this.paginador = new Paginador(10);
 	}
 	
-	public Carregamento getCarregamento() {
+	public CarregamentoTeste getCarregamento() {
 		return carregamento;
 	}
 
-	public void setCarregamento(Carregamento carregamento) {
+	public void setCarregamento(CarregamentoTeste carregamento) {
 		this.carregamento = carregamento;
 	}
 
 	public void listar() { 
 		try {
 			if (chavePesquisa == null || chavePesquisa.trim().isEmpty()) {
-				this.lista = facade.listar(paginador);
+				this.lista = facade.listar(paginador.primeiroRegistro(), paginador.getTamanhoPagina());
 			} else {
-				this.lista = facade.listar(paginador);
+				this.lista = facade.listar(paginador.primeiroRegistro(), paginador.getTamanhoPagina());
 				//this.lista = facade.autocomplete(chavePesquisa, paginador);
 			}
 		} catch (Exception e) {
@@ -56,7 +56,7 @@ public class CarregamentoMb implements Serializable {
 		}
 	}
 
-	public List<Carregamento> getLista() {
+	public List<CarregamentoTeste> getLista() {
 		if (lista == null) {
 			listar();
 		}
@@ -65,10 +65,10 @@ public class CarregamentoMb implements Serializable {
 
 	public void iniciarCriacao() {
 		this.estadoView = CRIACAO;
-		this.carregamento = new Carregamento();
+		this.carregamento = new CarregamentoTeste();
 	}
 
-	public void iniciarAlteracao(Carregamento carregamento) {
+	public void iniciarAlteracao(CarregamentoTeste carregamento) {
 		this.carregamento = carregamento;
 		this.estadoView = ALTERACAO;
 	}
@@ -85,7 +85,7 @@ public class CarregamentoMb implements Serializable {
 
 	}
 
-	public void iniciarExclusao(Carregamento carregamento) {
+	public void iniciarExclusao(CarregamentoTeste carregamento) {
 		this.carregamento = carregamento;
 		this.estadoView = EXCLUSAO;
 	}

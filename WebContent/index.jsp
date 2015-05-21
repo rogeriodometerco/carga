@@ -5,6 +5,6 @@
 </head>
 <body>
 	<% response.sendRedirect(request.getContextPath() +
-	"/paginas/carregamento.xhtml"); %>
+	"/paginas/carregamentoTeste.xhtml"); %>
 </body>
 </html>

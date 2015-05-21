@@ -3,18 +3,21 @@ package managedbean;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import util.JsfUtil;
 import facade.GenericCrudFacade;
 
 public abstract class GenericCrudMb<T>  {
-	protected static final String LISTAGEM = "listagem";
+	private static final String LISTAGEM = "listagem";
 	private static final String CRIACAO = "criacao";
 	private static final String ALTERACAO = "alteracao";
 	private static final String EXCLUSAO = "exclusao";
 	private T entidade;
 	private List<T> lista;
-	protected String estadoView;
-
+	private String estadoView;
+	private Integer pagina;
+	private Integer tamanhoPagina;
 
 	public T getEntidade() {
 		return entidade;
@@ -103,7 +106,8 @@ public abstract class GenericCrudMb<T>  {
 	}
 	
 	public Boolean isListagem() {
-		return this.estadoView != null && this.estadoView.equals(LISTAGEM);
+		System.out.println("isListage() " + this.estadoView == null && this.estadoView.equals(LISTAGEM)); 
+		return this.estadoView == null && this.estadoView.equals(LISTAGEM);
 	}
 
 	public Boolean isCriacao() {
@@ -116,6 +120,20 @@ public abstract class GenericCrudMb<T>  {
 
 	public Boolean isExclusao() {
 		return this.estadoView != null && this.estadoView.equals(EXCLUSAO);
+	}
+	
+	public void paginaAnterior() {
+		if (this.pagina > 1) {
+			pagina -= 1;
+		}
+		listar();
+	}
+	
+	public void proximaPagina() {
+		if (lista != null && lista.size() >= tamanhoPagina) {
+			pagina += 1;
+			listar();
+		}
 	}
 	
 	protected abstract GenericCrudFacade<T> getServico();

@@ -15,7 +15,7 @@ import dao.GenericDao;
 @Stateless
 public abstract class GenericCrudFacade<T> {
 
-	private static final String UNIT_NAME = "itinerarioPU";
+	private static final String UNIT_NAME = "cargaPU";
 
 	@PersistenceContext(unitName = UNIT_NAME)
 	private EntityManager em;
@@ -43,8 +43,8 @@ public abstract class GenericCrudFacade<T> {
 		return getDao().listar();
 	}
 
-	public List<T> listar(Paginador paginador) throws Exception {
-		return getDao().listar(paginador);
+	public List<T> listar(int firstResult, int maxResults) throws Exception {
+		return getDao().listar(firstResult, maxResults);
 	}
 
 	public List<T> salvar(List<T> lista) throws Exception {

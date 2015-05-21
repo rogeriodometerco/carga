@@ -14,41 +14,41 @@
 	<ui:define name="conteudo">
 		<p:messages id="mensagens" closable="true" />
 
-		<h:form id="form1" rendered="#{carregamentoMb.isListagem()}">
+		<h:form id="form1" >
 			<p />
-			<p:commandButton value="Nova" action="#{carregamentoMb.iniciarCriacao}"
-				ajax="false" update="@all" />
+			<p:commandButton value="Novo" action="#{carregamentoTesteMb.iniciarCriacao}" ajax="false"
+				update="@all" />
 			<p:spacer width="8px" />
-			<p:inputText value="#{carregamentoMb.chavePesquisa}" 
+			<p:inputText  
 				title="Pesquisar por código, nome ou localidade"/>
 			<p:commandButton value="Pesquisar"
-				actionListener="#{carregamentoMb.listar}" update="listagem :mensagens" />
+				actionListener="#{carregamentoTesteMb.listar}" update="listagem :mensagens" />
 			<p />
 
-			<p:dataTable id="listagem" value="#{carregamentoMb.lista}" var="carregamento"
+			<p:dataTable id="listagem" value="#{carregamentoTesteMb.lista}" var="carregamento"
 				emptyMessage="Nenhum registro encontrado" style="width: 800px">
 				<p:column>
 					<f:facet name="header">Código</f:facet>
-					#{carregamento.id}
+					#{carregamentoTeste.id}
 				</p:column>
 				<p:column>
 					<f:facet name="header">Origem</f:facet>
-					#{carregamento.origem}
+					#{carregamentoTeste.origem}
 				</p:column>
 				<p:column>
 					<f:facet name="header">Destino</f:facet>
-					#{carregamento.destino}
+					#{carregamentoTeste.destino}
 				</p:column>
 				<p:column style="width: 40px">
 					<h:panelGroup>
 						<p:commandLink title="Editar"
-							action="#{carregamentoMb.iniciarAlteracao(carregamento)}" ajax="false"
+							action="#{carregamentoTesteMb.iniciarAlteracao(carregamento)}" ajax="false"
 							update="@all">
 							<p:graphicImage value="/resources/icones/edit.gif"/>
 						</p:commandLink>
 						<p:spacer width="5px" />
 						<p:commandLink title="Excluir"
-							action="#{carregamentoMb.iniciarExclusao(carregamento)}" ajax="false"
+							action="#{carregamentoTesteMb.iniciarExclusao(carregamento)}" ajax="false"
 							update="@all">
 							<p:graphicImage value="/resources/icones/delete.gif"/>
 						</p:commandLink>
@@ -57,42 +57,42 @@
 			</p:dataTable>
 			<p />
 			<p:commandButton id="anterior" value="Anterior" title="Página anterior"
-				disabled="#{!carregamentoMb.temPaginaAnterior()}"
-				actionListener="#{carregamentoMb.paginaAnterior}"
+				disabled="#{!carregamentoTesteMb.temPaginaAnterior()}"
+				actionListener="#{carregamentoTesteMb.paginaAnterior}"
 				update="listagem, anterior, proxima" />
 			<p:commandButton id="proxima" value="Próxima" title="Próxima página"
-				disabled="#{!carregamentoMb.temProximaPagina()}"
-				actionListener="#{carregamentoMb.proximaPagina}"
+				disabled="#{!carregamentoTesteMb.temProximaPagina()}"
+				actionListener="#{carregamentoTesteMb.proximaPagina}"
 				update="listagem, anterior, proxima" />
 		</h:form>
 
 		<h:form id="form2"
-			rendered="#{carregamentoMb.isCriacao() || carregamentoMb.isAlteracao() || carregamentoMb.isExclusao()}">
+			rendered="#{carregamentoTesteMb.isCriacao() || carregamentoTesteMb.isAlteracao() || carregamentoTesteMb.isExclusao()}">
 			<h3>
 				<p:outputLabel value="Criar carregamento"
-					rendered="#{carregamentoMb.isCriacao()}" />
+					rendered="#{carregamentoTesteMb.isCriacao()}" />
 				<p:outputLabel value="Alterar carregamento"
-					rendered="#{carregamentoMb.isAlteracao()}" />
+					rendered="#{carregamentoTesteMb.isAlteracao()}" />
 				<p:outputLabel value="Confirmar exclusão da carregamento"
-					rendered="#{carregamentoMb.isExclusao()}" />
+					rendered="#{carregamentoTesteMb.isExclusao()}" />
 			</h3>
 
 			<h:panelGrid columns="2">
 				<p:outputLabel value="Código" />
-				<p:inputText value="#{carregamentoMb.carregamento.id}" />
+				<p:inputText value="#{carregamentoTesteMb.carregamentoTeste.id}" />
 				<p:outputLabel value="Origem" />
-				<p:inputText value="#{carregamentoMb.carregamento.origem}" />
+				<p:inputText value="#{carregamentoTesteMb.carregamentoTeste.origem}" />
 				<p:outputLabel value="Destino" />
-				<p:inputText value="#{carregamentoMb.carregamento.destino}" />
+				<p:inputText value="#{carregamentoTesteMb.carregamentoTeste.destino}" />
 			</h:panelGrid>
 			<p />
 			<p:commandButton value="Salvar"
-				action="#{carregamentoMb.terminarCriacaoOuAlteracao()}" update="@all"
-				rendered="#{carregamentoMb.isCriacao() || carregamentoMb.isAlteracao()}" />
+				action="#{carregamentoTesteMb.terminarCriacaoOuAlteracao()}" update="@all"
+				rendered="#{carregamentoTesteMb.isCriacao() || carregamentoTesteMb.isAlteracao()}" />
 			<p:commandButton value="Excluir"
-				action="#{carregamentoMb.terminarExclusao()}" update="@all"
-				rendered="#{carregamentoMb.isExclusao()}" immediate="false" />
-			<p:commandButton value="Cancelar" action="#{carregamentoMb.cancelar()}"
+				action="#{carregamentoTesteMb.terminarExclusao()}" update="@all"
+				rendered="#{carregamentoTesteMb.isExclusao()}" immediate="false" />
+			<p:commandButton value="Cancelar" action="#{carregamentoTesteMb.cancelar()}"
 				update="@all" immediate="false" />
 		</h:form>
 	</ui:define>

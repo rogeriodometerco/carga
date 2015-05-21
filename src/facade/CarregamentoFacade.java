@@ -1,16 +1,18 @@
 package facade;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import modelo.Carregamento;
+import modelo.CarregamentoTeste;
 import dao.CarregamentoDao;
 
 @Stateless
-public class CarregamentoFacade extends GenericCrudFacade<Carregamento> {
+public class CarregamentoFacade extends GenericCrudFacade<CarregamentoTeste> 
+	implements Serializable {
 
 	@EJB
 	private CarregamentoDao escolaDao;
@@ -23,7 +25,7 @@ public class CarregamentoFacade extends GenericCrudFacade<Carregamento> {
 
 
 	@Override
-	protected void validar(Carregamento entidade) throws Exception {
+	protected void validar(CarregamentoTeste entidade) throws Exception {
 		List<String> erros = new ArrayList<String>();
 
 		if (erros.size() > 0) {
@@ -32,7 +34,7 @@ public class CarregamentoFacade extends GenericCrudFacade<Carregamento> {
 	}
 
 	@Override
-	protected void validarExclusao(Carregamento entidade) throws Exception {
+	protected void validarExclusao(CarregamentoTeste entidade) throws Exception {
 		List<String> erros = new ArrayList<String>();
 
 		if (erros.size() > 0) {
