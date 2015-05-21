@@ -1,8 +1,9 @@
 package modelo;
 
 import java.math.BigDecimal;
-import java.util.List;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -20,8 +21,14 @@ public class Carregamento {
 	@Column(name="ID_CARREGAMENTO")
 	private Integer id;
 	@Embedded
+	@AttributeOverrides({ @AttributeOverride(name = "DS_NOME", column = @Column(name = "DS_NOME_ORIGEM")),
+	@AttributeOverride(name = "LATITUDE", column = @Column(name = "LATITUDE_ORIGEM")),
+	@AttributeOverride(name = "LONGITUDE", column = @Column(name = "LONGITUDE_ORIGEM"))})
 	private Local origem;
 	@Embedded
+	@AttributeOverrides({ @AttributeOverride(name = "DS_NOME", column = @Column(name = "DS_NOME_DESTINO")),
+	@AttributeOverride(name = "LATITUDE", column = @Column(name = "LATITUDE_DESTINO")),
+	@AttributeOverride(name = "LONGITUDE", column = @Column(name = "LONGITUDE_DESTINO"))})
 	private Local destino;
 	@Column(name="DS_PRODUTO")
 	private String produto;
@@ -30,6 +37,7 @@ public class Carregamento {
 	@Column(name="VL_FRETE")
 	private BigDecimal vlFrete;
 
+	
 	
 	public Carregamento() {
 	}
