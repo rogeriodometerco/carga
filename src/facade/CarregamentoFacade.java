@@ -7,11 +7,11 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import modelo.CarregamentoTeste;
+import modelo.Carregamento;
 import dao.CarregamentoDao;
 
 @Stateless
-public class CarregamentoFacade extends GenericCrudFacade<CarregamentoTeste> 
+public class CarregamentoFacade extends GenericCrudFacade<Carregamento> 
 	implements Serializable {
 
 	@EJB
@@ -25,17 +25,21 @@ public class CarregamentoFacade extends GenericCrudFacade<CarregamentoTeste>
 
 
 	@Override
-	protected void validar(CarregamentoTeste entidade) throws Exception {
+	protected void validar(Carregamento entidade) throws Exception {
 		List<String> erros = new ArrayList<String>();
 
+		// Acrescentar aqui os erros na lista.
+		
 		if (erros.size() > 0) {
 			throw new Exception(erros.toString());
 		}
 	}
 
 	@Override
-	protected void validarExclusao(CarregamentoTeste entidade) throws Exception {
+	protected void validarExclusao(Carregamento entidade) throws Exception {
 		List<String> erros = new ArrayList<String>();
+
+		// Acrescentar aqui os erros na lista.
 
 		if (erros.size() > 0) {
 			throw new Exception(erros.toString());

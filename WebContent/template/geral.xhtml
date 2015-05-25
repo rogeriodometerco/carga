@@ -13,27 +13,24 @@
 <h:body>
 	<h:form>
 		<h:outputStylesheet name="geral.css" library="css" />
-		<h2>Publicação de cargas</h2>
 
-		<p:menubar id="menuBar">
-			<p:submenu label="Cadastro">
- 				<p:menuitem outcome="/paginas/carregamento" value="Carregamento" /> 
-			</p:submenu>
-			<p:submenu label="#{sessaoMb.login}">
-				<p:menuitem outcome="/paginas/alterarSenha" value="Alterar senha" />
-				<p:menuitem action="#{sessaoMb.logout}" immediate="true" value="Sair" />
-			</p:submenu>
-		</p:menubar>
+	<h:panelGrid columns="3">
+    <p:commandButton id="menuButton" title="Menu" type="button" icon="ui-icon-home"/>
+    <p:slideMenu overlay="true" trigger="menuButton" my="left top" at="left bottom" style="width:180px">
+		<p:menuitem outcome="/paginas/carregamento" value="Carregamento" /> 
+		<p:menuitem outcome="/paginas/carregamentoModal" value="Carregamento - modal" /> 
+		<p:menuitem outcome="/paginas/alterarSenha" value="Alterar senha" />
+		<p:menuitem action="#{sessaoMb.logout}" value="Sair" immediate="true" />
+    </p:slideMenu>
+    
+		<label style="font-size: 20px">Publicação de cargas</label>
+	</h:panelGrid>
+		<hr />
 	</h:form>
 
 	<p:spacer height="3px"/>
 
-	<p:panel >
-		<f:facet name="header">
-			<ui:insert name="titulo" />
-		</f:facet>
-		<ui:insert name="conteudo" />
-	</p:panel>
+	<ui:insert name="conteudo" />
 
 </h:body>
 

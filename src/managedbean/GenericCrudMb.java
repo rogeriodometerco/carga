@@ -19,6 +19,12 @@ public abstract class GenericCrudMb<T>  {
 	private Integer pagina;
 	private Integer tamanhoPagina;
 
+	public GenericCrudMb() {
+		this.estadoView = LISTAGEM;
+		this.pagina = 1;
+		this.tamanhoPagina = 10;
+	}
+	
 	public T getEntidade() {
 		return entidade;
 	}
@@ -34,18 +40,23 @@ public abstract class GenericCrudMb<T>  {
 		return lista;
 	}
 
-	public void listar() { 
+	public void listar() {
+		listar(1);
+	}
+
+	private void listar(int pagina) {
 		try {
+			this.pagina = pagina;
 			this.lista = recuperarLista();
 		} catch (Exception e) {
 			JsfUtil.addMsgErro("Erro ao listar: " + e.getMessage());
 		}
 	}
-
 	public void iniciarCriacao() {
 		try {
 			this.estadoView = CRIACAO;
 			this.entidade = getClasseEntidade().newInstance();
+			System.out.println("iniciarCriacao() - " + entidade);
 		} catch (Exception e) {
 			JsfUtil.addMsgErro("Erro ao instanciar entidade: " + e.getMessage());
 		}
@@ -97,17 +108,16 @@ public abstract class GenericCrudMb<T>  {
 		this.estadoView = LISTAGEM;
 	}
 
-	public Boolean exibirListagem() {
+	public Boolean listagemVisivel() {
 		return isListagem();
 	}
 	
-	public Boolean exibirEdicao() {
+	public Boolean edicaoVisivel() {
 		return isCriacao() || isAlteracao() || isExclusao();
 	}
 	
 	public Boolean isListagem() {
-		System.out.println("isListage() " + this.estadoView == null && this.estadoView.equals(LISTAGEM)); 
-		return this.estadoView == null && this.estadoView.equals(LISTAGEM);
+		return this.estadoView.equals(LISTAGEM);
 	}
 
 	public Boolean isCriacao() {
@@ -122,18 +132,52 @@ public abstract class GenericCrudMb<T>  {
 		return this.estadoView != null && this.estadoView.equals(EXCLUSAO);
 	}
 	
+	public Boolean temPaginaAnterior() {
+		return pagina > 1;
+	}
+
+	public Boolean temProximaPagina() {
+		if (lista == null) {
+			return false;
+		} else {
+			return tamanhoPagina <= lista.size();
+		}
+	}
+
 	public void paginaAnterior() {
 		if (this.pagina > 1) {
 			pagina -= 1;
 		}
-		listar();
+		listar(pagina);
 	}
 	
 	public void proximaPagina() {
 		if (lista != null && lista.size() >= tamanhoPagina) {
 			pagina += 1;
-			listar();
+			listar(pagina);
 		}
+	}
+	
+	public String getDescricaoOperacao() {
+		if (isListagem()) {
+			return null;
+		} else if (isCriacao()) {
+			return "Novo";
+		} else if (isAlteracao()) {
+			return "Edição";
+		} else if (isExclusao()) {
+			return "Exclusão";
+		} else {
+			return null;
+		}
+	}
+	
+	protected Integer getPagina() {
+		return pagina;
+	}
+	
+	protected Integer getTamanhoPagina() {
+		return tamanhoPagina;
 	}
 	
 	protected abstract GenericCrudFacade<T> getServico();

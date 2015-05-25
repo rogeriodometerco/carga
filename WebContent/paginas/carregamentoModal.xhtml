@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/template/cadastroModal.xhtml">
+
+	<ui:define name="titulo">
+		Cadastro de carregamento
+	</ui:define>
+	<ui:param name="bean" value="#{carregamentoMb}" />
+
+	<ui:define name="camposPesquisa">
+	</ui:define>
+
+	<ui:define name="areaListagem">
+		<p:dataTable id="entidades" value="#{carregamentoMb.lista}" 
+			var="carregamento" emptyMessage="Nenhum registro encontrado"
+			style="width: 800px">
+
+			<p:column>
+				<f:facet name="header">Código</f:facet>
+					#{carregamento.id}
+				</p:column>
+			<p:column>
+				<f:facet name="header">Origem</f:facet>
+					#{carregamento.origem}
+				</p:column>
+			<p:column>
+				<f:facet name="header">Destino</f:facet>
+					#{carregamento.destino}
+				</p:column>
+			<p:column style="width: 40px">
+				<h:panelGroup>
+					<p:commandLink title="Editar"
+						actionListener="#{carregamentoMb.iniciarAlteracao(carregamento)}"
+						oncomplete="exibirEdicao()"
+						update="form :mensagens">
+						<p:graphicImage value="/resources/icones/edit.gif" />
+					</p:commandLink>
+					<p:spacer width="5px" />
+					<p:commandLink title="Excluir"
+						actionListener="#{carregamentoMb.iniciarExclusao(carregamento)}"
+						oncomplete="exibirEdicao()"
+						update="form :mensagens">
+						<p:graphicImage value="/resources/icones/delete.gif" />
+					</p:commandLink>
+				</h:panelGroup>
+			</p:column>
+		</p:dataTable>
+	</ui:define>
+
+	<ui:define name="camposEdicao">
+		<h:panelGrid columns="1">
+			<p:outputLabel value="Código"
+				rendered="#{!carregamentoMb.isCriacao()}" />
+			<p:inputText value="#{carregamentoMb.entidade.id}" 
+				rendered="#{!carregamentoMb.isCriacao()}" disabled="true" />
+			<p:outputLabel value="Origem" />
+			<p:inputText value="#{carregamentoMb.entidade.origem}" />
+			<p:outputLabel value="Destino" />
+			<p:inputText value="#{carregamentoMb.entidade.destino}" />
+		</h:panelGrid>
+	</ui:define>
+
+</ui:composition>

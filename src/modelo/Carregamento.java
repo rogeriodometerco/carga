@@ -1,93 +1,73 @@
 package modelo;
 
-import java.math.BigDecimal;
+import java.io.Serializable;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 
 @Entity
-@Table(name="CARREGAMENTO")
-public class Carregamento {
+public class Carregamento implements Serializable {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID_CARREGAMENTO")
+	@GeneratedValue
 	private Integer id;
-	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "DS_NOME", column = @Column(name = "DS_NOME_ORIGEM")),
-	@AttributeOverride(name = "LATITUDE", column = @Column(name = "LATITUDE_ORIGEM")),
-	@AttributeOverride(name = "LONGITUDE", column = @Column(name = "LONGITUDE_ORIGEM"))})
-	private Local origem;
-	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "DS_NOME", column = @Column(name = "DS_NOME_DESTINO")),
-	@AttributeOverride(name = "LATITUDE", column = @Column(name = "LATITUDE_DESTINO")),
-	@AttributeOverride(name = "LONGITUDE", column = @Column(name = "LONGITUDE_DESTINO"))})
-	private Local destino;
-	@Column(name="DS_PRODUTO")
-	private String produto;
-	@Column(name="DS_QTDADE")
-	private String descricaoQtdade;
-	@Column(name="VL_FRETE")
-	private BigDecimal vlFrete;
 
+	private String origem;
+	private Double latOrigem;
+	private Double lngOrigem;
+	private String destino;
+	private Double latDestino;
+	private Double lngDestino;
+	private String descricao;
 	
-	
-	public Carregamento() {
-	}
-
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public Local getOrigem() {
+	public String getOrigem() {
 		return origem;
 	}
-
-	public void setOrigem(Local origem) {
+	public void setOrigem(String origem) {
 		this.origem = origem;
 	}
-
-	public Local getDestino() {
+	public Double getLatOrigem() {
+		return latOrigem;
+	}
+	public void setLatOrigem(Double latOrigem) {
+		this.latOrigem = latOrigem;
+	}
+	public Double getLngOrigem() {
+		return lngOrigem;
+	}
+	public void setLngOrigem(Double lngOrigem) {
+		this.lngOrigem = lngOrigem;
+	}
+	public String getDestino() {
 		return destino;
 	}
-
-	public void setDestino(Local destino) {
+	public void setDestino(String destino) {
 		this.destino = destino;
 	}
-
-	public String getProduto() {
-		return produto;
+	public Double getLatDestino() {
+		return latDestino;
 	}
-
-	public void setProduto(String produto) {
-		this.produto = produto;
+	public void setLatDestino(Double latDestino) {
+		this.latDestino = latDestino;
 	}
-
-	public String getDescricaoQtdade() {
-		return descricaoQtdade;
+	public Double getLngDestino() {
+		return lngDestino;
 	}
-
-	public void setDescricaoQtdade(String descricaoQtdade) {
-		this.descricaoQtdade = descricaoQtdade;
+	public void setLngDestino(Double lngDestino) {
+		this.lngDestino = lngDestino;
 	}
-
-	public BigDecimal getVlFrete() {
-		return vlFrete;
+	public String getDescricao() {
+		return descricao;
 	}
-
-	public void setVlFrete(BigDecimal vlFrete) {
-		this.vlFrete = vlFrete;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 	
 	

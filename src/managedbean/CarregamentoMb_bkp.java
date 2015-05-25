@@ -8,7 +8,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import modelo.CarregamentoTeste;
+import modelo.Carregamento;
 import util.JsfUtil;
 import util.Paginador;
 import facade.CarregamentoFacade;
@@ -21,8 +21,8 @@ public class CarregamentoMb_bkp implements Serializable {
 	private static final String CRIACAO = "criacao";
 	private static final String ALTERACAO = "alteracao";
 	private static final String EXCLUSAO = "exclusao";
-	private CarregamentoTeste carregamento;
-	private List<CarregamentoTeste> lista;
+	private Carregamento carregamento;
+	private List<Carregamento> lista;
 	private String estadoView;
 	private String chavePesquisa;
 	@EJB
@@ -35,11 +35,11 @@ public class CarregamentoMb_bkp implements Serializable {
 		this.paginador = new Paginador(10);
 	}
 	
-	public CarregamentoTeste getCarregamento() {
+	public Carregamento getCarregamento() {
 		return carregamento;
 	}
 
-	public void setCarregamento(CarregamentoTeste carregamento) {
+	public void setCarregamento(Carregamento carregamento) {
 		this.carregamento = carregamento;
 	}
 
@@ -56,7 +56,7 @@ public class CarregamentoMb_bkp implements Serializable {
 		}
 	}
 
-	public List<CarregamentoTeste> getLista() {
+	public List<Carregamento> getLista() {
 		if (lista == null) {
 			listar();
 		}
@@ -65,10 +65,10 @@ public class CarregamentoMb_bkp implements Serializable {
 
 	public void iniciarCriacao() {
 		this.estadoView = CRIACAO;
-		this.carregamento = new CarregamentoTeste();
+		this.carregamento = new Carregamento();
 	}
 
-	public void iniciarAlteracao(CarregamentoTeste carregamento) {
+	public void iniciarAlteracao(Carregamento carregamento) {
 		this.carregamento = carregamento;
 		this.estadoView = ALTERACAO;
 	}
@@ -85,7 +85,7 @@ public class CarregamentoMb_bkp implements Serializable {
 
 	}
 
-	public void iniciarExclusao(CarregamentoTeste carregamento) {
+	public void iniciarExclusao(Carregamento carregamento) {
 		this.carregamento = carregamento;
 		this.estadoView = EXCLUSAO;
 	}
